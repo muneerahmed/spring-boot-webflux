@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /web
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    reactor.netty.http.client: DEBUG
+    com.example: DEBUG
+
+spring:
+  mvc:
+    log-request-details: true
