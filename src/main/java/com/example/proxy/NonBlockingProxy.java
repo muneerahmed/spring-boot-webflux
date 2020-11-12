@@ -54,12 +54,6 @@ public class NonBlockingProxy {
                 })
 /*
                 .doFinally(e ->  {
-                        log.debug("Finished Async Worker Thread ! Signal = " + e);
-                        try {
-                            response.getWriter().flush();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
                         asyncContext.complete();
                     })
 */
@@ -82,13 +76,9 @@ public class NonBlockingProxy {
                             .limitRate(1)
                             .log()
                             .subscribe(e -> {
-                                    try {
-                                        response.getOutputStream().flush();
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                    asyncContext.complete();
-                                });
+                                asyncContext.complete();
+                                DataBufferUtils.release(e);
+                            });
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
