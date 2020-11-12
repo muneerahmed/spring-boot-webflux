@@ -11,3 +11,5 @@ logging:
 spring:
   mvc:
     log-request-details: true
+  codec:
+    max-in-memory-size: 8KB

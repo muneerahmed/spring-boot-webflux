@@ -1,6 +1,7 @@
 package com.example.proxy;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -25,9 +27,9 @@ public class NonBlockingProxy {
     public NonBlockingProxy(WebClient.Builder webClientBuilder) {
         HttpClient httpClient = HttpClient
                     .create()
-                    .wiretap(true);
+                    .wiretap(false);
         this.webClient = webClientBuilder
-                            .baseUrl("http://www.sci.utah.edu")
+                            .baseUrl("http://ipv4.download.thinkbroadband.com")
                             .clientConnector(new ReactorClientHttpConnector(httpClient))
                             .build();
     }
@@ -43,19 +45,14 @@ public class NonBlockingProxy {
         log.debug("Starting Worker Thread for /nio !");
         AsyncContext asyncContext = request.startAsync(request, response);
         webClient.get()
-                .uri("/~macleod/docs/txt2html/sample.txt")
-                .accept(MediaType.TEXT_PLAIN)
+                .uri("/5MB.zip")
+                .accept(MediaType.APPLICATION_OCTET_STREAM)
                 .exchange()
                 .doOnSuccess((ClientResponse clientResponse) -> {
                     log.debug("Writing Response Async Worker Thread !");
                     copyHeaders(clientResponse, response);
                     copyBody(asyncContext, clientResponse, response);
                 })
-/*
-                .doFinally(e ->  {
-                        asyncContext.complete();
-                    })
-*/
                 .subscribe();
         log.debug("Finished Worker Thread for /nio !");
     }
@@ -69,13 +66,13 @@ public class NonBlockingProxy {
 
     private void copyBody(AsyncContext asyncContext, ClientResponse fileResponse, HttpServletResponse response) {
         log.debug("Writing Response Body !");
-        Mono<DataBuffer> mono = fileResponse.bodyToMono(DataBuffer.class);
+
+        Flux<DataBuffer> flux = fileResponse.bodyToFlux(DataBuffer.class);
         try {
-            DataBufferUtils.write(mono, response.getOutputStream())
-                            .limitRate(1)
+            DataBufferUtils.write(flux, response.getOutputStream())
+                            .limitRate(1000)
                             .log()
                             .subscribe(e -> {
-                                asyncContext.complete();
                                 DataBufferUtils.release(e);
                             });
         } catch (IOException e) {
