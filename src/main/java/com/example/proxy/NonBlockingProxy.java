@@ -42,7 +42,6 @@ public class NonBlockingProxy {
                         HttpServletResponse response) {
         log.debug("Starting Worker Thread for /nio !");
         AsyncContext asyncContext = request.startAsync(request, response);
-        asyncContext.setTimeout(10 * 60 * 1000);
         webClient.get()
                 .uri("/~macleod/docs/txt2html/sample.txt")
                 .accept(MediaType.TEXT_PLAIN)
