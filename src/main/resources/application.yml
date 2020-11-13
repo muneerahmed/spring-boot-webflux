@@ -6,7 +6,7 @@ logging:
   level:
     org.springframework.web: INFO
     reactor.netty.http.client: INFO
-    com.example: DEBUG
+    com.spring: DEBUG
 
 spring:
   mvc:

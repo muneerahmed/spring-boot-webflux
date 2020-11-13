@@ -1,4 +1,4 @@
-package com.spring.webflux;
+package com.spring.webclient;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -89,8 +89,7 @@ public class NonBlockingProxy {
         asyncContext.addListener(asyncCompletedListener);
         webClient.get()
                 .uri(uri)
-                .exchange()
-                .flatMap(clientResponse -> {
+                .exchangeToMono(clientResponse -> {
                     log.debug("Handling Response");
                     response.setStatus(clientResponse.rawStatusCode());
                     copyHeaders(clientResponse, response);
