@@ -1,4 +1,4 @@
-package com.spring.webclient;
+package com.spring.example.webclient;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package com.spring.web;
+package com.spring.example.web;
 
 import java.net.MalformedURLException;
 import lombok.extern.slf4j.Slf4j;
