@@ -4,12 +4,10 @@ server:
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    reactor.netty.http.client: DEBUG
+    org.springframework.web: INFO
+    reactor.netty.http.client: INFO
     com.example: DEBUG
 
 spring:
   mvc:
     log-request-details: true
-  codec:
-    max-in-memory-size: 8KB
