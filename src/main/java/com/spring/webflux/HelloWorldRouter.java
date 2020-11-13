@@ -9,9 +9,7 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
- * The router listens for traffic on the /hello?name={input} path and returns the value provided reactive handler class.
- *
- * for ex: curl -v http://localhost:8080/hello?name=allahhelpme
+ * The router listens for traffic for path /hello and routes it to registered handler class.
  *
  * https://spring.io/guides/gs/reactive-rest-service
  */

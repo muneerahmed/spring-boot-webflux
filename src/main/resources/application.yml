@@ -5,6 +5,7 @@ server:
 logging:
   level:
     org.springframework.web: INFO
+    com.spring.webflux: INFO
     reactor.netty.http.client: INFO
     com.spring: DEBUG
 
