@@ -23,6 +23,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
+/**
+ *
+ * curl -v http://localhost:8080/web/file/nio?uri=https://www.w3.org/TR/PNG/iso_8859-1.txt
+ * curl -v http://localhost:8080/web/file/nio?uri=http://www.sci.utah.edu/~macleod/docs/txt2html/sample.txt
+ * curl -v http://localhost:8080/web/file/nio?uri=http://ipv4.download.thinkbroadband.com/5MB.zip > output.zip
+ * curl -v http://localhost:8080/web/file/nio?uri=http://ipv4.download.thinkbroadband.com/512MB.zip > output.zip
+ *
+ */
 @Slf4j
 @Controller
 @RequestMapping("/file")
@@ -104,10 +112,7 @@ public class NonBlockingProxy {
         log.debug("Writing Response Headers");
         fileResponse.headers()
                     .asHttpHeaders()
-                    .forEach((k, v) ->  v.forEach(e -> {
-                        response.addHeader(k, e);
-                        // log.debug("key='{}' value='{}'", k, e);
-                    } ) );
+                    .forEach((k, v) ->  v.forEach(e -> response.addHeader(k, e)));
     }
 
     private Mono<Void> copyBody(ClientResponse fileResponse, OutputStream outputStream) {
