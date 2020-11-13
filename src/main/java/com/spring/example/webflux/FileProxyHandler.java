@@ -4,6 +4,7 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -19,13 +20,27 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class FileProxyHandler {
+class FileProxyHandler {
 
-    public Mono<ServerResponse> handle(ServerRequest serverRequest) {
-        log.debug("Received request for downloading file uri {}", serverRequest.queryParam("uri"));
+    FileProxyHandler(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
+    private final WebClient webClient;
+
+    Mono<ServerResponse> handle(ServerRequest serverRequest) {
+
+        log.debug("Received request for downloading file request uri={}", serverRequest.queryParam("uri"));
+
+        Mono<String> producer = webClient.get()
+                 .uri(serverRequest.queryParam("uri").get())
+                 .retrieve()
+                 .bodyToMono(String.class);
+
         return ServerResponse.ok()
                              .contentType(MediaType.TEXT_PLAIN)
                              .header("RID", UUID.randomUUID().toString())
-                             .bodyValue("Sample Text File");
+                             .body(producer, String.class);
     }
+
 }
