@@ -1,4 +1,4 @@
-package com.example.proxy;
+package com.spring.web;
 
 import java.net.MalformedURLException;
 import lombok.extern.slf4j.Slf4j;
