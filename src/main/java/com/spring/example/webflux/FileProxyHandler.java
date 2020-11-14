@@ -2,7 +2,6 @@ package com.spring.example.webflux;
 
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -37,10 +36,12 @@ class FileProxyHandler {
                  .retrieve()
                  .bodyToMono(String.class);
 
+        // https://stackoverflow.com/questions/49426304/convert-writes-to-outputstream-into-a-fluxdatabuffer-usable-by-serverresponse
+
         return ServerResponse.ok()
-                             .contentType(MediaType.TEXT_PLAIN)
                              .header("RID", UUID.randomUUID().toString())
-                             .body(producer, String.class);
+                             .body(producer, Byte.class)
+                             .log();
     }
 
 }

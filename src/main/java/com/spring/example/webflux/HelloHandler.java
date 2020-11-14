@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class HelloWorldHandler {
+public class HelloHandler {
 
     public static final String NAME = "name";
 
