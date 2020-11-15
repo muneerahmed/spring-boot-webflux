@@ -1,0 +1,13 @@
+Unit Tests
+----------
+- Unit testing means mocking. If you aren't mocking, you aren't unit testing.
+- If you want to write a unit test for method you should pretend all its dependencies are working using mocks
+- A unit test should never span 2 classes
+- Unit Tests are passing does not mean that feature is working as it is all fake.
+- In other words, they run in an ideal, completely fictional world.
+- Good unit tests are like bad mothers-in-law: When you make a mistake, they immediately tell you exactly what you did wrong.
+- Unit Tests are one of developers’ tools: they are great in quickly finding where exactly the bug is.
+
+References:
+- JUnit 5 : https://www.youtube.com/watch?v=6ojQqqavyzY&list=PLqq-6Pq4lTTa4ad5JISViSb2FVG8Vwa4o&index=16
+- https://arialdomartini.wordpress.com/2011/10/21/unit-tests-lie-thats-why-i-love-them

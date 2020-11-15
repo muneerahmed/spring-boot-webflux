@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+/**
+ * WebClient tutorial https://www.callicoder.com/spring-5-reactive-webclient-webtestclient-examples/
+ *
+ */
+
 @Service
 class DateTimeService {
 
@@ -18,11 +23,12 @@ class DateTimeService {
 
     private final WebClient webClient;
 
-    public Mono<Map> getCurrentDateTime() {
+    public Mono<String> getCurrentDateTime() {
         return webClient.get()
                                     .uri(URI)
                                     .accept(MediaType.APPLICATION_JSON)
                                     .retrieve()
-                                    .bodyToMono(Map.class);
+                                    .bodyToMono(Map.class)
+                                    .map(e -> e.get(DATETIME).toString());
     }
 }
