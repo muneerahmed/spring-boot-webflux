@@ -1,0 +1,11 @@
+Unit Tests
+- Learn JUnit 5
+    https://www.youtube.com/watch?v=ebxRd6ifmaY&list=PLqq-6Pq4lTTa4ad5JISViSb2FVG8Vwa4o&index=18
+
+Code Coverage
+- Learn Maven Architecture
+- Learn Jacoco Code Coverage
+
+Integration Tests
+- Learn WebTestClient
+- Learn TestRestTemplate
