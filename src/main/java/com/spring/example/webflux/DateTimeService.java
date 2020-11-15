@@ -24,11 +24,14 @@ class DateTimeService {
     private final WebClient webClient;
 
     public Mono<String> getCurrentDateTime() {
+        return getWorldTime().map(e -> e.containsKey(DATETIME) ? e.get(DATETIME).toString() : "");
+    }
+
+    private Mono<Map> getWorldTime() {
         return webClient.get()
-                                    .uri(URI)
-                                    .accept(MediaType.APPLICATION_JSON)
-                                    .retrieve()
-                                    .bodyToMono(Map.class)
-                                    .map(e -> e.get(DATETIME).toString());
+                .uri(URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(Map.class);
     }
 }
