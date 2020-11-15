@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import reactor.test.StepVerifier;
 /*
     https://dzone.com/articles/unit-tests-for-springs-webclient
  */
+@Tag("unit-tests")
 public class DateTimeServiceTest {
 
     public DateTimeService getService(Map<String, String> map) throws JsonProcessingException {
