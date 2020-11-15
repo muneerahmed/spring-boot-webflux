@@ -8,4 +8,8 @@ Code Coverage
 
 Integration Tests
 - Learn WebTestClient
+    https://stackoverflow.com/questions/45301220/how-to-mock-spring-webflux-webclient
+    https://howtodoinjava.com/spring-webflux/webfluxtest-with-webtestclient/
+    https://www.callicoder.com/spring-5-reactive-webclient-webtestclient-examples/
+    https://www.baeldung.com/spring-5-webclient
 - Learn TestRestTemplate
