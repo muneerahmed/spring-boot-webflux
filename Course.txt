@@ -13,3 +13,5 @@ Integration Tests
     https://www.callicoder.com/spring-5-reactive-webclient-webtestclient-examples/
     https://www.baeldung.com/spring-5-webclient
 - Learn TestRestTemplate
+
+Sonarqube is for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities on 20+ programming languages.

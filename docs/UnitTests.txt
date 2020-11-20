@@ -11,3 +11,19 @@ Unit Tests
 References:
 - JUnit 5 : https://www.youtube.com/watch?v=6ojQqqavyzY&list=PLqq-6Pq4lTTa4ad5JISViSb2FVG8Vwa4o&index=16
 - https://arialdomartini.wordpress.com/2011/10/21/unit-tests-lie-thats-why-i-love-them
+
+JUnit Dependencies
+------------------
+The spring-boot-starter-test artifact brings in the JUnit 5 Dependencies.
+
+Unit Tests Reports
+------------------
+- Use Maven Surefire Plugin
+The Maven Surefire Plugin is used during the test phase of the build lifecycle to execute the unit tests of an application and generates reports.
+The Surefire Plugin can be invoked by calling the test phase of the build lifecycle "mvn test"
+
+Run: mvn surefire-report:report
+
+References:
+https://maven.apache.org/surefire/maven-surefire-plugin/usage.html
+
