@@ -14,10 +14,11 @@ import reactor.core.publisher.Mono;
 @Service
 class DateTimeService {
 
-    static final String WORLD_CLOCK = "worldClock";
-    static final String WORLD_TIME = "worldTime";
-    static final String DATETIME = "datetime";
-    static final String URI = "http://worldtimeapi.org/api/ip";
+    static final String UTC_DATETIME = "utc";
+    static final String EST_DATETIME = "est";
+    static final String CURRENT_DATETIME = "currentDateTime";
+    static final String UTC_URL = "http://worldclockapi.com/api/json/utc/now";
+    static final String EST_URL = "http://worldclockapi.com/api/json/est/now";
 
     DateTimeService(WebClient webClient) {
         this.webClient = webClient;
@@ -25,15 +26,15 @@ class DateTimeService {
 
     private final WebClient webClient;
 
-    public Mono<Map> getCurrentDateTime() {
-        return getWorldTime().filter(e -> e.containsKey(DATETIME))
-                             .map(e -> e.get(DATETIME))
-                             .map(e -> Map.of(WORLD_TIME, e));
+    public Mono<Map> getCurrentDateTimes() {
+        return getWorldTime().filter(e -> e.containsKey(CURRENT_DATETIME))
+                             .map(e -> e.get(CURRENT_DATETIME))
+                             .map(e -> Map.of(EST_DATETIME, e));
     }
 
     private Mono<Map> getWorldTime() {
         return webClient.get()
-                .uri(URI)
+                .uri(UTC_URL)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class);

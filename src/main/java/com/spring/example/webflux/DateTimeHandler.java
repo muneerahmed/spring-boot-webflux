@@ -25,6 +25,6 @@ class DateTimeHandler {
     Mono<ServerResponse> handle(ServerRequest request) {
         return ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .body(dateTimeService.getCurrentDateTime(), Map.class);
+                                .body(dateTimeService.getCurrentDateTimes(), Map.class);
     }
 }

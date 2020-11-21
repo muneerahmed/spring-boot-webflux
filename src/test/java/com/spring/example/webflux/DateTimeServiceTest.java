@@ -35,10 +35,10 @@ public class DateTimeServiceTest {
     @Test
     @DisplayName("Current Time of your public IP")
     public void getCurrentDateTime() throws JsonProcessingException  {
-        DateTimeService service = getService(Map.of(DateTimeService.DATETIME, "2020-11-15T00:43:47.123850+00:00"));
-        Mono<Map> output = service.getCurrentDateTime();
+        DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, "2020-11-15T00:43:47.123850+00:00"));
+        Mono<Map> output = service.getCurrentDateTimes();
         StepVerifier.create(output)
-                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.WORLD_TIME), "2020-11-15T00:43:47.123850+00:00"))
+                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.EST_DATETIME), "2020-11-15T00:43:47.123850+00:00"))
                 .expectNext()
                 .expectComplete()
                 .verify();
@@ -48,7 +48,7 @@ public class DateTimeServiceTest {
     @DisplayName("Empty Current Time of your public IP")
     public void getCurrentDateTime1() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of());
-        Mono<Map> output = service.getCurrentDateTime();
+        Mono<Map> output = service.getCurrentDateTimes();
         StepVerifier.create(output)
                 .expectComplete()
                 .verify();
