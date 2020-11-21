@@ -27,14 +27,14 @@ class DateTimeService {
     private final WebClient webClient;
 
     public Mono<Map> getCurrentDateTimes() {
-        return getWorldTime().filter(e -> e.containsKey(CURRENT_DATETIME))
+        return getWorldTime(UTC_URL).filter(e -> e.containsKey(CURRENT_DATETIME))
                              .map(e -> e.get(CURRENT_DATETIME))
                              .map(e -> Map.of(EST_DATETIME, e));
     }
 
-    private Mono<Map> getWorldTime() {
+    private Mono<Map> getWorldTime(String url) {
         return webClient.get()
-                .uri(UTC_URL)
+                .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class);

@@ -33,7 +33,7 @@ public class DateTimeServiceTest {
     }
 
     @Test
-    @DisplayName("Current Time of your public IP")
+    @DisplayName("Current EST & UTC Datetime")
     public void getCurrentDateTime() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, "2020-11-15T00:43:47.123850+00:00"));
         Mono<Map> output = service.getCurrentDateTimes();
@@ -45,7 +45,7 @@ public class DateTimeServiceTest {
     }
 
     @Test
-    @DisplayName("Empty Current Time of your public IP")
+    @DisplayName("Empty EST & UTC Datetime")
     public void getCurrentDateTime1() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of());
         Mono<Map> output = service.getCurrentDateTimes();
