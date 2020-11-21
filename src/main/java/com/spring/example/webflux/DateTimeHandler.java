@@ -1,5 +1,6 @@
 package com.spring.example.webflux;
 
+import java.util.Map;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -23,7 +24,7 @@ class DateTimeHandler {
 
     Mono<ServerResponse> handle(ServerRequest request) {
         return ServerResponse.ok()
-                                .contentType(MediaType.TEXT_PLAIN)
-                                .body(dateTimeService.getCurrentDateTime(), String.class);
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(dateTimeService.getCurrentDateTime(), Map.class);
     }
 }

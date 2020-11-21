@@ -3,6 +3,7 @@ package com.spring.example.webflux;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -35,9 +36,10 @@ public class DateTimeServiceTest {
     @DisplayName("Current Time of your public IP")
     public void getCurrentDateTime() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(DateTimeService.DATETIME, "2020-11-15T00:43:47.123850+00:00"));
-        Mono<String> output = service.getCurrentDateTime();
+        Mono<Map> output = service.getCurrentDateTime();
         StepVerifier.create(output)
-                .expectNext("2020-11-15T00:43:47.123850+00:00")
+                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.WORLD_TIME), "2020-11-15T00:43:47.123850+00:00"))
+                .expectNext()
                 .expectComplete()
                 .verify();
     }
@@ -46,9 +48,8 @@ public class DateTimeServiceTest {
     @DisplayName("Empty Current Time of your public IP")
     public void getCurrentDateTime1() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of());
-        Mono<String> output = service.getCurrentDateTime();
+        Mono<Map> output = service.getCurrentDateTime();
         StepVerifier.create(output)
-                .expectNext("")
                 .expectComplete()
                 .verify();
     }

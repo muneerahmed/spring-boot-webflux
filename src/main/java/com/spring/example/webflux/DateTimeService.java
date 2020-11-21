@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 @Service
 class DateTimeService {
 
+    static final String WORLD_CLOCK = "worldClock";
+    static final String WORLD_TIME = "worldTime";
     static final String DATETIME = "datetime";
     static final String URI = "http://worldtimeapi.org/api/ip";
 
@@ -23,8 +25,10 @@ class DateTimeService {
 
     private final WebClient webClient;
 
-    public Mono<String> getCurrentDateTime() {
-        return getWorldTime().map(e -> e.containsKey(DATETIME) ? e.get(DATETIME).toString() : "");
+    public Mono<Map> getCurrentDateTime() {
+        return getWorldTime().filter(e -> e.containsKey(DATETIME))
+                             .map(e -> e.get(DATETIME))
+                             .map(e -> Map.of(WORLD_TIME, e));
     }
 
     private Mono<Map> getWorldTime() {
