@@ -31,12 +31,12 @@ class DateTimeService {
     public Flux<Map> getCurrentDateTimes(List<String> timezones) {
         return Flux.merge(
                     timezones.stream()
-                          .map(this::get)
+                          .map(this::getPublisher)
                           .collect(Collectors.toList())
                 );
     }
 
-    private Mono<Map> get(String timezone) {
+    private Mono<Map> getPublisher(String timezone) {
         return   getWorldTime(timezone)
                 .map(e -> e.get(CURRENT_DATETIME))
                 .map(e -> Map.of(timezone, e));
