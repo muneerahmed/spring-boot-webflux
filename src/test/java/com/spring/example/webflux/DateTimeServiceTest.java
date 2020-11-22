@@ -25,8 +25,8 @@ public class DateTimeServiceTest {
 
     public static final String OUTPUT = "2020-11-15T00:43:47.123850+00:00";
 
-    public DateTimeService getService(Map<String, String> map) throws JsonProcessingException {
-        ClientResponse clientResponse = ClientResponse.create(HttpStatus.OK)
+    public DateTimeService getService(Map<String, String> map, HttpStatus status) throws JsonProcessingException {
+        ClientResponse clientResponse = ClientResponse.create(status)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(new ObjectMapper().writeValueAsString(map))
                 .build();
@@ -39,7 +39,7 @@ public class DateTimeServiceTest {
     @Test
     @DisplayName("Current EST & UTC Datetime")
     public void getEstUtcDatetime() throws JsonProcessingException  {
-        DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, OUTPUT));
+        DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, OUTPUT), HttpStatus.OK);
         Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
                 .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.EST), OUTPUT))
@@ -51,7 +51,7 @@ public class DateTimeServiceTest {
     @Test
     @DisplayName("Empty EST & UTC Datetime")
     public void getEmptyDatetime() throws JsonProcessingException  {
-        DateTimeService service = getService(Map.of());
+        DateTimeService service = getService(Map.of(), HttpStatus.NOT_FOUND);
         Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
                 .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.EST), "N/A"))

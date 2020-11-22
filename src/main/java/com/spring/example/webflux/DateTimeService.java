@@ -19,10 +19,8 @@ class DateTimeService {
 
     static final String EST  = "est";
     static final String UTC  = "utc";
-    static final String EST_URL = "http://worldclockapi.com/api/json/est/now";
-    static final String UTC_URL = "http://worldclockapi.com/api/json/utc/now";
     static final String CURRENT_DATETIME = "currentDateTime";
-    static final Map<String, String> URLS = Map.of(EST, EST_URL, UTC, UTC_URL);
+    static final String URL = "http://worldclockapi.com/api/json/%s/now";
 
     DateTimeService(WebClient webClient) {
         this.webClient = webClient;
@@ -38,15 +36,15 @@ class DateTimeService {
                 );
     }
 
-    private Mono<Map> get(String timeZone) {
-        return   getWorldTime(URLS.get(timeZone))
+    private Mono<Map> get(String timezone) {
+        return   getWorldTime(timezone)
                 .map(e -> e.get(CURRENT_DATETIME))
-                .map(e -> Map.of(timeZone, e));
+                .map(e -> Map.of(timezone, e));
     }
 
-    private Mono<Map> getWorldTime(String url) {
+    private Mono<Map> getWorldTime(String timezone) {
         return webClient.get()
-                .uri(url)
+                .uri(String.format(URL, timezone))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class)
