@@ -37,8 +37,8 @@ public class DateTimeServiceTest {
     }
 
     @Test
-    @DisplayName("Current EST & UTC Datetime")
-    public void getEstUtcDatetime() throws JsonProcessingException  {
+    @DisplayName("Current EST & UTC Datetime Success Test")
+    public void getEstUtcDatetimeTest() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, OUTPUT), HttpStatus.OK);
         Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
@@ -49,8 +49,8 @@ public class DateTimeServiceTest {
     }
 
     @Test
-    @DisplayName("Empty EST & UTC Datetime")
-    public void getEmptyDatetime() throws JsonProcessingException  {
+    @DisplayName("Current EST & UTC Datetime Failure Test")
+    public void notFoundTest() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(), HttpStatus.NOT_FOUND);
         Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
