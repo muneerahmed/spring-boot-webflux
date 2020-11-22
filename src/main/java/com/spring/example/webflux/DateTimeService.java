@@ -2,7 +2,6 @@ package com.spring.example.webflux;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ class DateTimeService {
 
     private Mono<Map> get(String timeZone) {
         return   getWorldTime(URLS.get(timeZone))
-                .map(e -> Objects.nonNull(e.get(CURRENT_DATETIME)) ? e.get(CURRENT_DATETIME) : "N/A")
+                .map(e -> e.get(CURRENT_DATETIME))
                 .map(e -> Map.of(timeZone, e));
     }
 
@@ -51,6 +50,7 @@ class DateTimeService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class)
+                .onErrorReturn(Map.of(CURRENT_DATETIME, "N/A"))
                 .log();
     }
 }
