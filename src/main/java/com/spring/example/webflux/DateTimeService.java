@@ -1,9 +1,13 @@
 package com.spring.example.webflux;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,11 +18,12 @@ import reactor.core.publisher.Mono;
 @Service
 class DateTimeService {
 
-    static final String UTC_DATETIME = "utc";
-    static final String EST_DATETIME = "est";
-    static final String CURRENT_DATETIME = "currentDateTime";
-    static final String UTC_URL = "http://worldclockapi.com/api/json/utc/now";
+    static final String EST  = "est";
+    static final String UTC  = "utc";
     static final String EST_URL = "http://worldclockapi.com/api/json/est/now";
+    static final String UTC_URL = "http://worldclockapi.com/api/json/utc/now";
+    static final String CURRENT_DATETIME = "currentDateTime";
+    static final Map<String, String> URLS = Map.of(EST, EST_URL, UTC, UTC_URL);
 
     DateTimeService(WebClient webClient) {
         this.webClient = webClient;
@@ -26,10 +31,18 @@ class DateTimeService {
 
     private final WebClient webClient;
 
-    public Mono<Map> getCurrentDateTimes() {
-        return getWorldTime(UTC_URL).filter(e -> e.containsKey(CURRENT_DATETIME))
-                             .map(e -> e.get(CURRENT_DATETIME))
-                             .map(e -> Map.of(EST_DATETIME, e));
+    public Flux<Map> getCurrentDateTimes(List<String> timezones) {
+        return Flux.merge(
+                    timezones.stream()
+                          .map(this::get)
+                          .collect(Collectors.toList())
+                );
+    }
+
+    private Mono<Map> get(String timeZone) {
+        return   getWorldTime(URLS.get(timeZone))
+                .map(e -> Objects.nonNull(e.get(CURRENT_DATETIME)) ? e.get(CURRENT_DATETIME) : "N/A")
+                .map(e -> Map.of(timeZone, e));
     }
 
     private Mono<Map> getWorldTime(String url) {
@@ -37,6 +50,7 @@ class DateTimeService {
                 .uri(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(Map.class);
+                .bodyToMono(Map.class)
+                .log();
     }
 }
