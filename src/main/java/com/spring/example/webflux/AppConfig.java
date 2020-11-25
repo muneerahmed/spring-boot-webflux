@@ -3,6 +3,7 @@ package com.spring.example.webflux;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -15,6 +16,11 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  */
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public WebClient webClient() {
@@ -32,7 +38,7 @@ public class AppConfig {
     @Bean
     public RouterFunction<ServerResponse> datetimeRouter(DateTimeHandler handler) {
         return RouterFunctions.route(
-                                RequestPredicates.GET("/datetime"), handler::handle);
+                                RequestPredicates.GET("/flux/datetime"), handler::handle);
     }
 
     @Bean

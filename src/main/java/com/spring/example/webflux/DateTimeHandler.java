@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 /**
  * The handler for path /datetime and produces current date time from World Time API
  *
- * for ex: curl -v http://localhost:8080/datetime?timezones=est,utc
+ * for ex: curl -v http://localhost:8080/flux/datetime?timezones=est,utc
  */
 
 @Component
