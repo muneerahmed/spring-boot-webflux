@@ -14,7 +14,6 @@ import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,18 +23,17 @@ import reactor.netty.http.client.HttpClient;
 
 /**
  *
- * curl -v http://localhost:8080/web/file/nio?uri=https://www.w3.org/TR/PNG/iso_8859-1.txt
- * curl -v http://localhost:8080/web/file/nio?uri=http://www.sci.utah.edu/~macleod/docs/txt2html/sample.txt
- * curl -v http://localhost:8080/web/file/nio?uri=http://ipv4.download.thinkbroadband.com/5MB.zip > output.zip
- * curl -v http://localhost:8080/web/file/nio?uri=http://ipv4.download.thinkbroadband.com/512MB.zip > output.zip
+ * curl -v http://localhost:8080/nio-file?uri=https://www.w3.org/TR/PNG/iso_8859-1.txt
+ * curl -v http://localhost:8080/nio-file?uri=http://www.sci.utah.edu/~macleod/docs/txt2html/sample.txt
+ * curl -v http://localhost:8080/nio-file?uri=http://ipv4.download.thinkbroadband.com/5MB.zip > output.zip
+ * curl -v http://localhost:8080/nio-file?uri=http://ipv4.download.thinkbroadband.com/512MB.zip > output.zip
  *
  */
 @Slf4j
 @Controller
-@RequestMapping("/file")
-public class NonBlockingProxy {
+public class NonBlockingIOController {
 
-    public NonBlockingProxy(WebClient.Builder webClientBuilder) {
+    public NonBlockingIOController(WebClient.Builder webClientBuilder) {
         HttpClient httpClient = HttpClient
                     .create()
                     .wiretap(false);
@@ -78,7 +76,7 @@ public class NonBlockingProxy {
         }
     }
 
-    @GetMapping("/nio")
+    @GetMapping("/nio-file")
     public void nioFile(HttpServletRequest request,
                         HttpServletResponse response,
                         @RequestParam("uri") String uri) throws IOException {

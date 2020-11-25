@@ -31,20 +31,20 @@ public class AppConfig {
     public RouterFunction<ServerResponse> helloRouter(HelloHandler helloHandler) {
         return RouterFunctions
                 .route(
-                        RequestPredicates.GET("/hello")
+                        RequestPredicates.GET("/flux-hello")
                                 .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), helloHandler::hello);
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> datetimeRouter(DateTimeHandler handler) {
-        return RouterFunctions.route(
-                                RequestPredicates.GET("/flux/datetime"), handler::handle);
     }
 
     @Bean
     public RouterFunction<ServerResponse> fileRouter(FileProxyHandler handler) {
         return RouterFunctions.route(
-                RequestPredicates.GET("/file/webflux"), handler::handle);
+                RequestPredicates.GET("/flux-file"), handler::handle);
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> datetimeRouter(DateTimeHandler handler) {
+        return RouterFunctions.route(
+                                RequestPredicates.GET("/flux-datetime"), handler::handle);
     }
 
 }

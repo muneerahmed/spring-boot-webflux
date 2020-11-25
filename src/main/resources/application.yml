@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /web
+    context-path: /
 
 logging:
   level:

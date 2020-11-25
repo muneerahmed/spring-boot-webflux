@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 /**
  * The handler for path /hello and produces an output
  *
- * for ex: curl -v http://localhost:8080/hello?name=isa
+ * for ex: curl -v http://localhost:8080/flux-hello?name=isa
  *
  * https://spring.io/guides/gs/reactive-rest-service
  *

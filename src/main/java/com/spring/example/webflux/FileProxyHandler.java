@@ -10,10 +10,10 @@ import reactor.core.publisher.Mono;
 
 /**
  *
- * curl -v http://localhost:8080/file/webflux?uri=https://www.w3.org/TR/PNG/iso_8859-1.txt
- * curl -v http://localhost:8080/file/webflux?uri=http://www.sci.utah.edu/~macleod/docs/txt2html/sample.txt
- * curl -v http://localhost:8080/file/webflux?uri=http://ipv4.download.thinkbroadband.com/5MB.zip > output.zip
- * curl -v http://localhost:8080/file/webflux?uri=http://ipv4.download.thinkbroadband.com/512MB.zip > output.zip
+ * curl -v http://localhost:8080/flux-file?uri=https://www.w3.org/TR/PNG/iso_8859-1.txt
+ * curl -v http://localhost:8080/flux-file?uri=http://www.sci.utah.edu/~macleod/docs/txt2html/sample.txt
+ * curl -v http://localhost:8080/flux-file?uri=http://ipv4.download.thinkbroadband.com/5MB.zip > output.zip
+ * curl -v http://localhost:8080/flux-file?uri=http://ipv4.download.thinkbroadband.com/512MB.zip > output.zip
  *
  */
 
