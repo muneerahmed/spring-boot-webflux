@@ -1,1 +1,4 @@
 The spring-boot-starter-test dependency includes by default Mockito and AssertJ for testing.
+
+References:
+https://rieckpil.de
