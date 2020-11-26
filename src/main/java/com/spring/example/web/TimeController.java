@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +21,12 @@ public class TimeController {
 
     private final TimeService service;
 
-    @GetMapping("/web-datetime")
-    public Map getCurrentDateTime(@RequestParam("timezones") List<String> timezones) {
+    @GetMapping(value = "/web-datetime", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map getCurrentDateTime(@RequestParam(value = "timezones", required = false) List<String> timezones) {
         log.debug("Received a request for /datetime with query parameter timezones={}", timezones);
+        if(CollectionUtils.isEmpty(timezones)) {
+            throw new IllegalArgumentException("timeZones query parameter is mandatory");
+        }
         return service.getCurrentDateTimes(timezones);
     }
 }
