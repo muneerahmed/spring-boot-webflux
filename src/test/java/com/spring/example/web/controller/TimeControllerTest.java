@@ -42,8 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Otherwise, we may be in for ugly surprises at runtime.
  */
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = TimeController.class)
+@ExtendWith(SpringExtension.class) // annotation to tell JUnit 5 to enable Spring support
+@WebMvcTest(controllers = TimeController.class) // annotation fire up an application context that contains only the beans needed for testing a web controller
 public class TimeControllerTest {
 
     @Autowired

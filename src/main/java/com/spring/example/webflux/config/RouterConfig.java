@@ -18,7 +18,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  *
  */
 @Configuration
-public class AppConfig {
+public class RouterConfig {
 
     @Bean
     public RestTemplate restTemplate() {
