@@ -1,5 +1,6 @@
-package com.spring.example.webflux;
+package com.spring.example.webflux.handler;
 
+import com.spring.example.webflux.service.DateTimeService;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-class DateTimeHandler {
+public class DateTimeHandler {
 
     DateTimeHandler(DateTimeService dateTimeService) {
         this.dateTimeService = dateTimeService;
@@ -25,7 +26,7 @@ class DateTimeHandler {
 
     private final DateTimeService dateTimeService;
 
-    Mono<ServerResponse> handle(ServerRequest request) {
+    public Mono<ServerResponse> handle(ServerRequest request) {
         String[] timezones = request.queryParam("timezones")
                                .orElse("utc")
                                .split(",");

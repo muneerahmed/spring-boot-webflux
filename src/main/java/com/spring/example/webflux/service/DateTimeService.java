@@ -1,4 +1,4 @@
-package com.spring.example.webflux;
+package com.spring.example.webflux.service;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +42,7 @@ import reactor.core.publisher.Mono;
  */
 
 @Service
-class DateTimeService {
+public class DateTimeService {
 
     static final String EST  = "est";
     static final String UTC  = "utc";

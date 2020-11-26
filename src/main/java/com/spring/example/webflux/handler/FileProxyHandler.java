@@ -1,4 +1,4 @@
-package com.spring.example.webflux;
+package com.spring.example.webflux.handler;
 
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-class FileProxyHandler {
+public class FileProxyHandler {
 
     FileProxyHandler(WebClient webClient) {
         this.webClient = webClient;
@@ -27,7 +27,7 @@ class FileProxyHandler {
 
     private final WebClient webClient;
 
-    Mono<ServerResponse> handle(ServerRequest serverRequest) {
+    public Mono<ServerResponse> handle(ServerRequest serverRequest) {
 
         log.debug("Received request for downloading file request uri={}", serverRequest.queryParam("uri"));
 

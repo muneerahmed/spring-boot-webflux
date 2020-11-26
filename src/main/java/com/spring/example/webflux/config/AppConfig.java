@@ -1,5 +1,8 @@
-package com.spring.example.webflux;
+package com.spring.example.webflux.config;
 
+import com.spring.example.webflux.handler.DateTimeHandler;
+import com.spring.example.webflux.handler.FileProxyHandler;
+import com.spring.example.webflux.handler.HelloHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
