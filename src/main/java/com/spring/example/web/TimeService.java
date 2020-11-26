@@ -3,17 +3,15 @@ package com.spring.example.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 class TimeService {
 
-    TimeService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     static final String CURRENT_DATETIME = "currentDateTime";
     static final String URL = "http://worldclockapi.com/api/json/%s/now";
 
