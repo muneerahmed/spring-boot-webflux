@@ -1,4 +1,4 @@
-package com.spring.example.web;
+package com.spring.example.web.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,14 +9,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-class TimeService {
+public class TimeService {
 
     private final RestTemplate restTemplate;
     static final String CURRENT_DATETIME = "currentDateTime";
     static final String URL = "http://worldclockapi.com/api/json/%s/now";
 
 
-    Map<String, Object> getCurrentDateTimes(List<String> timezones) {
+    public Map<String, Object> getCurrentDateTimes(List<String> timezones) {
         Map<String, Object> result = new HashMap<>();
         for (String timezone : timezones) {
             result.put(timezone, get(String.format(URL, timezone)));

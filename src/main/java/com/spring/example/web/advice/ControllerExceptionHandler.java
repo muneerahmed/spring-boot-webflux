@@ -1,4 +1,4 @@
-package com.spring.example.web;
+package com.spring.example.web.advice;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
-package com.spring.example.web;
+package com.spring.example.web.controller;
 
+import com.spring.example.web.service.TimeService;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

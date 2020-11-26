@@ -1,4 +1,4 @@
-package com.spring.example.web;
+package com.spring.example.web.service;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 
-import static com.spring.example.web.TimeService.CURRENT_DATETIME;
+import static com.spring.example.web.service.TimeService.CURRENT_DATETIME;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;

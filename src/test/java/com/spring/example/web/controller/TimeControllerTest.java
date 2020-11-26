@@ -1,5 +1,6 @@
-package com.spring.example.web;
+package com.spring.example.web.controller;
 
+import com.spring.example.web.service.TimeService;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,12 +49,11 @@ public class TimeControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @MockBean
-    // @MockBean automatically replaces the bean of the same type in the application context with a Mockito mock
+    @MockBean // @MockBean automatically replaces the bean of the same type in the application context with a Mockito mock
     private TimeService service;
 
     @Test
-    void whenEmptyQueryParam_thenReturns400AndErrorResult() throws Exception {
+    public void whenEmptyQueryParam_thenReturns400AndErrorResult() throws Exception {
         mvc.perform(get("/web-datetime")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))

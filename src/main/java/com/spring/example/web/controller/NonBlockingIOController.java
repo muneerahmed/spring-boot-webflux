@@ -1,4 +1,4 @@
-package com.spring.example.web;
+package com.spring.example.web.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
