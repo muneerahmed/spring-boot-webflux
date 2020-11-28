@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -38,12 +37,13 @@ public class DateTimeServiceTest {
 
     @Test
     @DisplayName("Current EST & UTC Datetime Success Test")
-    public void getEstUtcDatetimeTest() throws JsonProcessingException  {
+    public void getCurrentDateTimesTest() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(DateTimeService.CURRENT_DATETIME, OUTPUT), HttpStatus.OK);
-        Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
+        Mono<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
-                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.EST), OUTPUT))
-                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.UTC), OUTPUT))
+                .consumeNextWith(e ->
+                        Assertions.assertAll( () -> Assertions.assertEquals(e.get(DateTimeService.EST), OUTPUT),
+                                              () -> Assertions.assertEquals(e.get(DateTimeService.UTC), OUTPUT)))
                 .expectComplete()
                 .verify();
     }
@@ -52,10 +52,11 @@ public class DateTimeServiceTest {
     @DisplayName("Current EST & UTC Datetime Failure Test")
     public void notFoundTest() throws JsonProcessingException  {
         DateTimeService service = getService(Map.of(), HttpStatus.NOT_FOUND);
-        Flux<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
+        Mono<Map> output = service.getCurrentDateTimes(List.of(DateTimeService.EST, DateTimeService.UTC));
         StepVerifier.create(output)
-                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.EST), "N/A"))
-                .consumeNextWith(e -> Assertions.assertEquals(e.get(DateTimeService.UTC), "N/A"))
+                .consumeNextWith(e ->
+                        Assertions.assertAll( () -> Assertions.assertEquals(e.get(DateTimeService.EST), "N/A"),
+                                              () -> Assertions.assertEquals(e.get(DateTimeService.UTC), "N/A")))
                 .expectComplete()
                 .verify();
     }

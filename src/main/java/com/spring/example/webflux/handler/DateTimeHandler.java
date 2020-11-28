@@ -30,7 +30,7 @@ public class DateTimeHandler {
         String[] timezones = request.queryParam("timezones")
                                .orElse("utc")
                                .split(",");
-        log.debug("Received a request for /datetime with query parameter timezones={}", timezones);
+        log.debug("Received a request for /flux-datetime with query parameter timezones={}", timezones);
         return ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .body(dateTimeService.getCurrentDateTimes(List.of(timezones)), Map.class);

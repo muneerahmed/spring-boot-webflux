@@ -1,12 +1,12 @@
 package com.spring.example.webflux.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -55,27 +55,41 @@ public class DateTimeService {
 
     private final WebClient webClient;
 
-    public Flux<Map> getCurrentDateTimes(List<String> timezones) {
-        return Flux.merge(
-                    timezones.stream()
-                          .map(this::getPublisher)
-                          .collect(Collectors.toList())
-                );
+    public Mono<Map> getCurrentDateTimes(List<String> timezones) {
+
+        return Mono.zip(
+                timezones.stream()
+                        .map(this::getWorldTime)
+                        .collect(Collectors.toList() )
+                        , this::convert);
     }
 
-    private Mono<Map> getPublisher(String timezone) {
-        return   getWorldTime(timezone)
-                .map(e -> e.get(CURRENT_DATETIME))
-                .map(e -> Map.of(timezone, e));
-    }
-
-    private Mono<Map> getWorldTime(String timezone) {
+    private Mono<Map<String, Object>> getWorldTime(String timezone) {
         return webClient.get()
                 .uri(String.format(URL, timezone))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Map.class)
-                .onErrorReturn(Map.of(CURRENT_DATETIME, "N/A"))
+                .map(e -> Map.of(timezone, e.get(CURRENT_DATETIME)))
+                .onErrorReturn(Map.of(timezone, "N/A"))
                 .log();
     }
+
+    /**
+     * Convert a List of Map to Map
+     *
+     * @param input
+     *
+     * @return
+     */
+    private Map convert(Object[] input) {
+        Map<Object, Object> result = new HashMap<>();
+        for (int i = 0; i < input.length; i++) {
+            Map temp = (Map) input[i];
+            temp.keySet().forEach(k -> result.put(k, temp.get(k)));
+        }
+        return result;
+    }
+
+
 }
