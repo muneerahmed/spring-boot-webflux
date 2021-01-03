@@ -1,0 +1,15 @@
+https://learnk8s.io/spring-boot-kubernetes-guide
+
+- Run Client
+curl -v http://localhost/web-datetime?timezones=est,utc
+
+- Start Minicube
+minikube status
+minikube stop
+minikube start
+
+- Deploy the Time Service in Kubernetes Cluster
+kubectl get deployment
+kubectl get svc
+kubectl apply -f spring-boot/time-service.yml
+minikube tunnel

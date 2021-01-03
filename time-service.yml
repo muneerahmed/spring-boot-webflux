@@ -1,0 +1,41 @@
+# https://learnk8s.io/spring-boot-kubernetes-guide
+
+# Deployment definition
+apiVersion: apps/v1 # version of this resource type
+kind: Deployment # the type of resource (Deployment)
+metadata:
+  name: time-service # the name of resource
+spec:
+  replicas: 1 # desired number of replicas of your container
+  selector:
+    matchLabels:
+      app: time-service # selects those Pods with a app: time-service label to belong to this Deployment resource
+  template:
+    metadata:
+      labels:
+        app: time-service # defines a label for the Pods that wrap your time-service container
+    spec:
+      containers:
+        - name: time-service # A name for the container (time-service)
+          image: muneerahmed/time-service:1.0.0 # The name of the Docker image
+          ports:
+            - containerPort: 8080 # The port that the container listens on (8080)
+          # env: # environment variable (SPRING_PROFILES_ACTIVE) that will be made available to the process in the container
+              #   - name: SPRING_PROFILES_ACTIVE
+              # value: local
+          imagePullPolicy: Always # forces the Docker image to be downloaded, even if it was already downloaded
+---
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: time-service
+spec:
+  selector:
+    app: time-service # all Pods that have a label of app: time-service will be exposed by the Service.
+                      # It is this label that ties your Service to your Deployment resource
+  ports:
+    - port: 80 # Service listens for requests on port 80 and forwards them to port 8080 of the target Pods:
+      targetPort: 8080
+  type: LoadBalancer # LoadBalancer, which makes the exposed Pods accessible from outside the cluster
+                     # default Service type is ClusterIP, which makes the exposed Pods only accessible from within the cluster

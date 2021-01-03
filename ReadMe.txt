@@ -10,10 +10,10 @@ mvn clean package -DskipTests=true
 
 -- Docker
 docker images
-docker image rm spring-boot-docker -f
+docker image rm time-service -f
 
 docker container ls
-docker stop spring-boot-docker
+docker stop time-service -f
 
-docker build -t spring-boot-docker .
-docker run -p 8080:8080 spring-boot-docker
+docker build -t time-service .
+docker run -p 8080:8080 time-service
