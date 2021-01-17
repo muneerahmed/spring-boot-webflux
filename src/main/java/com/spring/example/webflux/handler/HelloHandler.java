@@ -1,5 +1,6 @@
 package com.spring.example.webflux.handler;
 
+import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -31,13 +32,12 @@ public class HelloHandler {
      * @return a Mono object that holds a ServerResponse body
      */
     public Mono<ServerResponse> hello(ServerRequest request) {
-        log.debug("Received a request for /hello with query parameter name={}", request.queryParam(NAME));
+        log.debug("Received a request for /flux-hello with query parameter name={}", request.queryParam(NAME));
         return Mono.from(ServerResponse
                             .ok()
-                            .contentType(MediaType.TEXT_PLAIN)
+                            .contentType(MediaType.APPLICATION_JSON)
                             .header("rid", UUID.randomUUID().toString())
-                            .body(BodyInserters.
-                                        fromValue(String.format("Allah Help Me %s", request.queryParam(NAME)))))
+                            .body(BodyInserters.fromValue(Map.of("result", String.format("Allah Help Me %s", request.queryParam(NAME))))))
                             .log();
     }
 }

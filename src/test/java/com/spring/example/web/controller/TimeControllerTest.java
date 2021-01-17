@@ -2,6 +2,7 @@ package com.spring.example.web.controller;
 
 import com.spring.example.web.service.TimeService;
 import java.util.Map;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * but for the tests to be meaningful, we need to remember to cover all of the responsibilities.
  * Otherwise, we may be in for ugly surprises at runtime.
  */
-
+@Tag("unit-tests")
 @ExtendWith(SpringExtension.class) // annotation to tell JUnit 5 to enable Spring support
 @WebMvcTest(controllers = TimeController.class) // annotation fire up an application context that contains only the beans needed for testing a web controller
 public class TimeControllerTest {

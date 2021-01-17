@@ -35,7 +35,7 @@ public class RouterConfig {
         return RouterFunctions
                 .route(
                         RequestPredicates.GET("/flux-hello")
-                                .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), helloHandler::hello);
+                                .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)), helloHandler::hello);
     }
 
     @Bean
