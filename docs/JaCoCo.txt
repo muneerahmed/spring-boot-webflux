@@ -1,8 +1,0 @@
-JaCoCo uses class file instrumentation to record execution coverage data.
-
-JaCoCo Maven Plugin
-The JaCoCo Maven plug-in provides the JaCoCo runtime agent to your tests and allows basic report creation.
-https://www.eclemma.org/jacoco/trunk/doc/maven.html
-
-Reference:
-https://www.eclemma.org/jacoco/trunk/doc/agent.html

@@ -1,4 +1,0 @@
-The Spring Boot Maven Plugin provides Spring Boot support in Apache Maven.
-
-Reference:
-https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/maven-plugin/reference/html
