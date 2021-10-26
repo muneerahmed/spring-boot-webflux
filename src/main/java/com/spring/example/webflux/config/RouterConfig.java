@@ -3,6 +3,7 @@ package com.spring.example.webflux.config;
 import com.spring.example.webflux.handler.DateTimeHandler;
 import com.spring.example.webflux.handler.FileProxyHandler;
 import com.spring.example.webflux.handler.HelloHandler;
+import com.spring.example.webflux.handler.SSEHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -50,4 +51,9 @@ public class RouterConfig {
                                 RequestPredicates.GET("/flux-datetime"), handler::handle);
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> sseRouter(SSEHandler handler) {
+        return RouterFunctions.route(
+                RequestPredicates.GET("/sse"), handler::handle);
+    }
 }
